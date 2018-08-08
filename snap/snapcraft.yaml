@@ -1,0 +1,50 @@
+name: shot
+version: '0.1.0'
+summary: Smart screen shot
+description: |
+  The smart screen shot application
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+
+parts:
+  electron-app:
+    source: dist
+    plugin: nodejs
+    node-engine: 8.11.3
+    # node-packages: 
+     #  - electron-builder      
+
+    stage-packages:
+      - libnotify4
+      - libappindicator1
+      - libxtst6
+      - libnss3
+      - libxss1
+      - fontconfig-config
+      - gconf2
+      - libasound2
+      - pulseaudio
+    
+    after:
+      - desktop-gtk2
+   
+    install: |
+      echo $SNAPCRAFT_PART_INSTALL 
+      mkdir $SNAPCRAFT_PART_INSTALL/app
+      mv linux-unpacked/* $SNAPCRAFT_PART_INSTALL/app
+    prime: 
+      - -node_modules
+
+apps:
+  shot:
+    command: env TMPDIR=$XDG_RUNTIME_DIR desktop-launch $SNAP/app/shot
+    plugs:
+      - home
+      - x11
+      - unity7
+      - browser-support
+      - network
+      - gsettings
+      - pulseaudio
+      - opengl

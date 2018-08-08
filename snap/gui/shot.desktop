@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Shot
+Icon=${SNAP}/meta/gui/main.png
+Categories=Network;
+Exec=shot
+Terminal=false
